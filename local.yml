@@ -1,0 +1,43 @@
+version: '3'
+services:
+  postgres:
+    image: "postgres" # use latest official postgres version
+    env_file:
+      - task_fast_api/.env # configure postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - database-data:/var/lib/postgresql/data/ # persist data even if container shuts down
+  #  app:
+  #    build:
+  #      context: .
+  #      dockerfile: compose/local/Dockerfile
+  #    volumes:
+  #      - .:/app
+  #    stdin_open: true
+  #    env_file:
+  #      - .env
+  #    ports:
+  #      - "8000:8000"
+  #    command: /start
+  #    #    depends_on:
+  #    #      - postgres
+
+  pgadmin:
+    image: dpage/pgadmin4
+    links:
+      - postgres
+    depends_on:
+      - postgres
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 731ruslan00@mail.ru
+      PGADMIN_DEFAULT_PASSWORD: ruslan
+    volumes:
+      - pgadmin:/root/.pgadmin
+    ports:
+      - "9713:80"
+    restart: always
+
+volumes:
+  database-data: { }# named volumes can be managed easier using docker-compose
+  pgadmin: # named volumes can be managed easier using docker-compose
