@@ -10,6 +10,7 @@ python-jose[cryptography]
 passlib[bcrypt]
 # work with DB
 sqlalchemy
+psycopg2
 # work with testing and debuging
 pytest
 requests
