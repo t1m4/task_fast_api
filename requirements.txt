@@ -13,3 +13,5 @@ sqlalchemy
 # work with testing and debuging
 pytest
 requests
+# env
+pydantic[dotenv]
