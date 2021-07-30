@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+pydantic
+# email validator
+pydantic[email]
+# working with forms
+python-multipart
+# working with JWT and hashed passwords
+python-jose[cryptography]
+passlib[bcrypt]
+# work with DB
+sqlalchemy
+# work with testing and debuging
+pytest
+requests
