@@ -27,12 +27,8 @@ def get_all_users(db: Session, skip: int = 0, limit: int = 100):
 
 def create_user(db: Session, user: UserCreate):
     hashed_password = get_password_hash(user.password)
-    print(user.dict())
     db_user = UserDB(**user.dict(), hashed_password=hashed_password)
-    print('db', db_user.dict())
-    # TODO check that happening with that model. Write tests
     db_user = User(**db_user.dict())
     db.add(db_user)
     db.commit()
-    db.refresh(db_user)
     return db_user
