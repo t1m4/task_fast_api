@@ -24,6 +24,11 @@ def db() -> Generator:
 
 
 @pytest.fixture()
+def username():
+    return "test"
+
+
+@pytest.fixture()
 def email():
     return "test@gmail.com"
 
@@ -38,16 +43,16 @@ def delete_user(db, user):
     db.commit()
 
 
-def test_create_user(db: Session, email, password):
-    user_in = UserCreate(email=email, password=password)
+def test_create_user(db: Session, username, email, password):
+    user_in = UserCreate(username=username, email=email, password=password)
     user = create_user(db, user_in)
     assert user.email == email
     assert hasattr(user, "hashed_password")
     delete_user(db, user)
 
 
-def test_create_user_active(db: Session, email, password):
-    user_in = UserCreate(email=email, password=password, is_active=True)
+def test_create_user_active(db: Session, username, email, password):
+    user_in = UserCreate(username=username, email=email, password=password, is_active=True)
     user = create_user(db, user_in)
     assert user.is_active == True
     delete_user(db, user)

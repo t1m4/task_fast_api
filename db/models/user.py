@@ -6,6 +6,7 @@ from db.base_classes import Base
 
 class User(Base):
     full_name = Column(String, index=True)
+    username = Column(String, unique=True, index=True)
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
