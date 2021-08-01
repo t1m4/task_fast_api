@@ -1,18 +1,19 @@
 from typing import Optional
 
+from pydantic import Field
 from pydantic.main import BaseModel
 from pydantic.networks import EmailStr
 
 
 class UserBase(BaseModel):
-    full_name: Optional[str] = None
+    full_name: Optional[str] = Field(None, max_length=50)
     email: Optional[EmailStr] = None
     is_active: Optional[bool] = True
 
 
 # Create via API
 class UserCreate(UserBase):
-    email: EmailStr
+    email: EmailStr = None
     password: str
 
 
@@ -21,8 +22,6 @@ class UserUpdate(UserBase):
     password: Optional[str] = None
 
 
-class UserOut(UserBase):
-    id: Optional[int] = None
 
 
 class UserDBBase(UserBase):
@@ -32,6 +31,9 @@ class UserDBBase(UserBase):
         orm_mode = True
 
 
+class UserOut(UserDBBase):
+    pass
+
 # user store in DB
 class UserDB(UserBase):
-    password: str
+    hashed_password: str

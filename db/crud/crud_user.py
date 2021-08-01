@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 
 from auth.security import get_password_hash
 from db.models.user import User
-from schemas.user import UserCreate
+from schemas.user import UserCreate, UserDB
 
 
 def get_user(db: Session, user_id: int):
@@ -26,8 +26,12 @@ def get_all_users(db: Session, skip: int = 0, limit: int = 100):
     return db.query(User).offset(skip).limit(limit).all()
 
 def create_user(db: Session, user: UserCreate):
-    password = get_password_hash(user.password)
-    db_user = User(**user.dict(), password=password)
+    hashed_password = get_password_hash(user.password)
+    print(user.dict())
+    db_user = UserDB(**user.dict(), hashed_password=hashed_password)
+    print('db', db_user.dict())
+    # TODO check that happening with that model. Write tests
+    db_user = User(**db_user.dict())
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
