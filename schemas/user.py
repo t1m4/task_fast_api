@@ -6,6 +6,7 @@ from pydantic.networks import EmailStr
 
 
 class UserBase(BaseModel):
+    username: str
     full_name: Optional[str] = Field(None, max_length=50)
     email: Optional[EmailStr] = None
     is_active: Optional[bool] = True
