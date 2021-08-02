@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent
 
 
 class Settings(BaseSettings):
-    SECRET_KEY: str = secrets.token_urlsafe(64)
+    SECRET_KEY: str
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
 
     POSTGRES_HOST: str
