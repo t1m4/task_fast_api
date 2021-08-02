@@ -14,7 +14,9 @@ psycopg2
 # work with testing and debuging
 pytest
 requests
+coverage
 # env
 pydantic[dotenv]
 # migrations
 alembic
+
