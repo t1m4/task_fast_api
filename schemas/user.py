@@ -33,6 +33,7 @@ class UserDBBase(UserBase):
         orm_mode = True
 
 
+# return to the client
 class UserOut(UserDBBase):
     pass
 
