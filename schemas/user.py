@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import Field
+from pydantic import Field, validator
 from pydantic.main import BaseModel
 from pydantic.networks import EmailStr
 
@@ -18,6 +18,11 @@ class UserCreate(UserBase):
     email: EmailStr = None
     password: str
 
+    @validator('password')
+    def password_validator(cls, v):
+        if len(v) < 8:
+            raise ValueError('Must contain more than 8 symbols')
+        return v
 
 # Update via API
 class UserUpdate(UserBase):
