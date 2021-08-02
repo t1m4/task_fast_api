@@ -1,4 +1,3 @@
-import logging
 from typing import Generator
 
 import pytest
@@ -23,36 +22,38 @@ def db() -> Generator:
     yield TestingSessionLocal()
 
 
-@pytest.fixture()
-def username():
-    return "test"
-
-
-@pytest.fixture()
-def email():
-    return "test@gmail.com"
-
-
-@pytest.fixture()
-def password():
-    return "testtest"
-
-
-def delete_user(db, user):
-    db.delete(user)
+@pytest.fixture(autouse=True)
+def check(db: Session):
+    yield
+    users = db.query(User).all()
+    for i in users:
+        db.delete(i)
     db.commit()
 
 
-def test_create_user(db: Session, username, email, password):
-    user_in = UserCreate(username=username, email=email, password=password)
+test_user_data = {
+    'username': 'test',
+    'password': 'test',
+    'email': 'test@mail.ru',
+}
+
+
+def test_create_user(db: Session):
+    user_in = UserCreate(**test_user_data)
     user = create_user(db, user_in)
-    assert user.email == email
+    assert user.email == test_user_data['email']
     assert hasattr(user, "hashed_password")
-    delete_user(db, user)
+    assert user.is_active == True
+    assert user.is_superuser == False
 
 
-def test_create_user_active(db: Session, username, email, password):
-    user_in = UserCreate(username=username, email=email, password=password, is_active=True)
+def test_create_user_active(db: Session):
+    user_in = UserCreate(**test_user_data, is_active=True)
     user = create_user(db, user_in)
     assert user.is_active == True
-    delete_user(db, user)
+
+
+def test_create_user_is_superuser(db: Session):
+    user_in = UserCreate(**test_user_data, is_superuser=True)
+    user = create_user(db, user_in)
+    assert user.is_superuser == True
