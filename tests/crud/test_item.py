@@ -22,11 +22,6 @@ def db() -> Generator:
     yield TestingSessionLocal()
 
 
-def delete_user(db, user):
-    db.delete(user)
-    db.commit()
-
-
 item_data = {
     'title': 'hello',
     'description': 'world',
@@ -46,7 +41,7 @@ def test_create_item(db: Session):
 
 
 def test_get_not_exist_item(db: Session):
-    item = get_item(db, 100)
+    item = get_item(db, -1)
     assert item is None
 
 
