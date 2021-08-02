@@ -8,6 +8,9 @@ BASE_DIR = Path(__file__).resolve().parent
 
 
 class Settings(BaseSettings):
+    FIRST_SUPERUSER: str = 'SUPERUSER'
+    FIRST_SUPERUSER_PASSWORD: str = "SUPERPASSWORD"
+
     SECRET_KEY: str
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
 
