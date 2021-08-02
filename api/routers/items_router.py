@@ -32,7 +32,9 @@ def create_item(
 ):
     return crud_item.create_item(db, item_in, current_user.id)
 
-
+# @router.get("/helo")
+# def hello_my_friend():
+#     pass
 @router.put('/{id}', response_model=ItemOut)
 def update_item(
         *,

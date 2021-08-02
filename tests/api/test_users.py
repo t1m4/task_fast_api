@@ -26,10 +26,10 @@ def client() -> Generator:
     with TestClient(app) as c:
         yield c
 
+
 @pytest.fixture(scope="module")
 def user_token_headers(db: Session, client: TestClient):
     return get_token_headers(db, client)
-
 
 
 def test_get_users(client: TestClient, user_token_headers: Dict):
@@ -44,8 +44,8 @@ def test_get_user_me(client: TestClient, user_token_headers: Dict):
     r = client.get(url, headers=user_token_headers)
     current_user = r.json()
     assert current_user
-    assert current_user['username']
-    assert current_user['email']
-    assert current_user['full_name'] is None
-    assert current_user["is_superuser"]
-    assert current_user["is_active"] is True
+    assert current_user.get('username')
+    assert current_user.get('email')
+    assert current_user.get('full_name') is None
+    assert current_user.get("is_superuser")
+    assert current_user.get("is_active") is True
