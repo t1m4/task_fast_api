@@ -20,9 +20,9 @@ def verify_password(plain_password, hashed_password) -> str:
 
 def create_access_token(user_id: int, expires_delta: timedelta = None) -> str:
     if expires_delta:
-        expire = datetime.utcnow() + expires_delta
+        expire = datetime.now() + expires_delta
     else:
-        expire = datetime.utcnow() + timedelta(
+        expire = datetime.now() + timedelta(
             minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES
         )
     to_encode = {"exp": expire, "sub": str(user_id)}
