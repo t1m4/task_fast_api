@@ -34,7 +34,7 @@ def get_users(
     return crud_user.get_all_users(db, skip=skip, limit=limit)
 
 
-@router.post("/", response_model=user.UserOut)
+@router.post("/", response_model=user.UserOut, status_code=status.HTTP_201_CREATED)
 def create_user(
         *,
         db: Session = Depends(get_db),

@@ -31,6 +31,7 @@ def update_item(db: Session, item_db: Item, item_in: ItemUpdate):
         if field in update_data:
             setattr(item_db, field, update_data[field])
     db.commit()
+    return item_db
 
 
 def delete_item(db: Session, item_db: Item):
