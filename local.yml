@@ -36,6 +36,8 @@ services:
       - pgadmin:/root/.pgadmin
     ports:
       - "9713:80"
+    logging:
+      driver: none
     restart: always
 
 volumes:
