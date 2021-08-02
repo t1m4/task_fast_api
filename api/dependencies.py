@@ -50,3 +50,14 @@ def get_current_user(
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     return user
+
+
+def get_current_user_is_superuser(current_user: models.User = Depends(get_current_user)) -> models.User:
+    """
+    Check that user is a superuser.
+    """
+    if not current_user.is_superuser:
+        raise HTTPException(
+            status_code=400, detail="The user doesn't have enough privileges"
+        )
+    return current_user

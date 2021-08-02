@@ -10,6 +10,7 @@ class UserBase(BaseModel):
     full_name: Optional[str] = Field(None, max_length=50)
     email: Optional[EmailStr] = None
     is_active: Optional[bool] = True
+    is_superuser: Optional[bool] = False
 
 
 # Create via API
